@@ -9,6 +9,8 @@ Spirit is a Python based forum built using the Django framework.
 
 To see it in action, please visit [The Spirit Project](http://spirit-project.com/).
 
+Forked by Jack Pien
+
 ## Compatibility
 
 * Python 2.7, 3.3, 3.4 (recommended) and 3.5
