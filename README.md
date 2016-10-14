@@ -11,6 +11,44 @@ To see it in action, please visit [The Spirit Project](http://spirit-project.com
 
 Forked by Jack Pien
 
+## Adding into existing Django project
+
+Inspired by [this forum post](http://community.spirit-project.com/topic/318/tutorial-for-not-advanced-django-users/)
+
+Assuming you have a fresh Django 1.8 project (via django-admin startproject your_dj_project)
+* Add spirit folder to your project
+* cp Spirit/examples/project/settings/<files> to your_dj_project/your_dj_project/ (where settings.py lives)
+   1. base.py
+   1. dev.py
+   1. prod.py
+* cd your_dj_project/your_dj_project (where settings.py lives)
+* mv settings.py settings_old.py
+* create new settings.py
+
+```
+from .dev import *
+
+ROOT_URLCONF = '[your_dj_project].urls'
+WSGI_APPLICATION = '[your_dj_project].wsgi.application'
+```
+
+* Update your_dj_project/your_dj_project/urls.py
+
+```
+import spirit.urls
+
+
+urlpatterns = [
+...
+    url(r'^forum/', include(spirit.urls)),
+...
+]
+```
+
+* python manage.py migrate
+* python manage.py createcachetable
+* python manage.py collectstatic
+
 ## Compatibility
 
 * Python 2.7, 3.3, 3.4 (recommended) and 3.5
