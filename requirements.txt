@@ -7,3 +7,4 @@ django-infinite-scroll-pagination>=0.1.3,<0.2
 django-djconfig>=0.4.0,<0.5
 unicode-slugify==0.1.3
 pytz
+uwsgi>=2.0.13.1
