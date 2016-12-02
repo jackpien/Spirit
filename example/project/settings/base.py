@@ -8,6 +8,7 @@ from __future__ import unicode_literals
 import os
 import sys
 
+sys.path.append("..")
 from spirit.settings import *
 
 # You may override or extend spirit settings below...
