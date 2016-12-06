@@ -5,6 +5,8 @@
 {% block title %}{{ topic.title }}{% endblock %}
 
 {% block content %}
+<div class="container-fluid">
+
 
         <ol class="breadcrumb">
             <li><a href="{% url "spirit:index" %}" >{% trans "Main" %}</a></li>
@@ -90,7 +92,7 @@
                 {% if user.is_authenticated %}
                     {% render_notification_form user=user topic=topic %}
                 {% elif not topic.is_closed %}
-                    <a class="button" href="{% url "spirit:comment:publish" topic_id=topic.pk %}">{% trans "Reply" %}</a>
+                    <a class="button btn btn-default" role="button" href="{% url "spirit:comment:publish" topic_id=topic.pk %}">{% trans "Reply" %}</a>
                 {% endif %}
             </div>
         </div>
@@ -101,7 +103,7 @@
 
                     <div class="comment-media">
                         <div class="comment-img">
-                            <img class="comment-avatar" src="{% get_gravatar_url user=user size=50 %}" />
+                            <img class="comment-avatar img-circle" src="{% get_gravatar_url user=user size=50 %}" />
                         </div>
 
                         <div class="comment-body">
@@ -111,6 +113,7 @@
 
                 </div>
             {% endif %}
+</div>
 
             <script>
                 $( document ).ready(function() {

@@ -4,28 +4,28 @@
 
     {% for c in comments %}
 
-		<div class="comment{% if c.action %} is-highlighted{% endif %}" id="c{{forloop.counter0|add:comments.start_index }}" data-number="{{ forloop.counter0|add:comments.start_index }}" data-pk="{{ c.pk }}">
+		<div class="comment{% if c.action %} is-highlighted{% endif %}" id="c{{forloop.counter0|add:comments.start_index }}" data-number="{{ forloop.counter0|add:comments.start_index }}" data-pk="{{ c.pk }}" style="overflow:auto;">
 
             {% if not c.is_removed %}
 
-                <div class="comment-media">
-                    <div class="comment-img">
-                        <img class="comment-avatar" src="{% get_gravatar_url user=c.user size=50 %}" />
+                <div class="comment-media row">
+                    <div class="comment-img col-xs-2 col-sm-1">
+                        <img class="comment-avatar img-circle" src="{% get_gravatar_url user=c.user size=50 %}" />
                     </div>
 
-                    <div class="comment-body">
-                        <div class="comment-info">
+                    <div class="comment-body col-xs-10 col-sm-11">
+                        <div class="comment-info row">
 
-                            <div class="comment-username">
-                                <a class="username{% if c.user.st.is_administrator %} is-admin{% elif c.user.st.is_moderator %} is-mod{% endif %}" href="{{ c.user.st.get_absolute_url }}">{{ c.user.username }}</a><span class="comment-realname">{{ c.user.get_full_name }}</span>
+                            <div class="comment-username col-xs-6 col-sm-3">
+                                <a class="username{% if c.user.st.is_administrator %} is-admin{% elif c.user.st.is_moderator %} is-mod{% endif %}" href="{{ c.user.st.get_absolute_url }}">{{ c.user.username }}</a> <span class="comment-realname" style="margin-left:5%;">{{ c.user.get_full_name }}</span>
                             </div>
 
-                            <ul class="comment-date">
+                            <ul class="comment-date col-xs-6 col-sm-9" style="text-align:right;">
                                 {% if c.modified_count > 0 %}
-                                    <li><a href="{% url "spirit:comment:history:detail" comment_id=c.pk %}"><i class="fa fa-pencil"></i> {{ c.modified_count }}</a></li>
+                                    <li style="display:inline;"><a href="{% url "spirit:comment:history:detail" comment_id=c.pk %}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> {{ c.modified_count }}</a></li>
                                 {% endif %}
 
-                                <li title="{{ c.date }}">{{ c.date|shortnaturaltime }}</li>
+                                <li style="display:inline;  margin-left:2%;" title="{{ c.date }}">{{ c.date|shortnaturaltime }}</li>
                             </ul>
 
                         </div>
@@ -41,50 +41,50 @@
                 </div>
 
                 {% if not c.action %}
-                    <ul class="comment-actions">
+                    <div class="comment-actions btn-group" style="float:right;">
                         {% if user.is_authenticated %}
                             {% if user.st.is_moderator %}
-                                <li><a href="{% url "spirit:comment:delete" c.pk %}"><i class="fa fa-times"></i> {% trans "delete" %}</a></li>
+                                <a class="btn btn-default" role="button" href="{% url "spirit:comment:delete" c.pk %}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> {% trans "delete" %}</a>
                             {% endif %}
 
-                            <li><a href="{% url "spirit:comment:flag:create" c.pk %}"><i class="fa fa-flag"></i> {% trans "report" %}</a></li>
+                            <a class="btn btn-default" role="button" href="{% url "spirit:comment:flag:create" c.pk %}"><span class="glyphicon glyphicon-flag" aria-hidden="true"></span>{% trans "report" %}</a>
                         {% endif %}
 
-                        <li><a class="js-share" href="#" data-dialog=".js-share-{{ c.pk }}"><i class="fa fa-share"></i> {% trans "share" %}</a></li>
+                        <a class="btn btn-default" role="button" class="js-share" href="#" data-dialog=".js-share-{{ c.pk }}"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> {% trans "share" %}</a>
 
                         {% if user.is_authenticated %}
                             {% if c.like %}
-                                <li class="comment-like"><a class="js-like" href="{% url "spirit:comment:like:delete" c.like.pk %}" data-count="{{ c.likes_count }}" ><i class="fa fa-heart"></i> {% trans "remove like" %} ({{ c.likes_count }})</a></li>
+                                <a class="btn btn-default js-like" role="button" href="{% url "spirit:comment:like:delete" c.like.pk %}" data-count="{{ c.likes_count }}" ><span class="glyphicon glyphicon-heart" aria-hidden="true"></span> {% trans "remove like" %} ({{ c.likes_count }})</a>
                             {% else %}
                                 {% ifnotequal c.user user  %}
-                                    <li class="comment-like"><a class="js-like" class="like" href="{% url "spirit:comment:like:create" c.pk %}" data-count="{{ c.likes_count }}" ><i class="fa fa-heart"></i> {% trans "like" %} ({{ c.likes_count }})</a></li>
+                                    <a class="js-like" class="like" class="btn btn-default" role="button" href="{% url "spirit:comment:like:create" c.pk %}" data-count="{{ c.likes_count }}" ><span class="glyphicon glyphicon-heart" aria-hidden="true"></span> {% trans "like" %} ({{ c.likes_count }})</a>
                                 {% else %}
-                                    <li class="comment-like"><i class="fa fa-heart"></i> ({{ c.likes_count }})</li>
+                                    <button type="button" class="btn btn-default" disabled="disabled"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span> ({{ c.likes_count }})</button>
                                 {% endifnotequal %}
                             {% endif %}
 
                             {% if user.st.is_moderator or c.user.pk == user.pk %}
-                                <li><a href="{% url "spirit:comment:update" pk=c.pk %}" >{% trans "edit" %}</a></li>
+                                <a class="btn btn-default" role="button" href="{% url "spirit:comment:update" pk=c.pk %}" >{% trans "edit" %}</a>
                             {% endif %}
 
                             {% ifnotequal c.user.pk user.pk %}
-                                <li><a href="{% url "spirit:comment:publish" topic_id=topic.pk pk=c.pk %}" >{% trans "quote" %}</a></li>
-                                <li><a href="#reply" >{% trans "reply" %}</a></li>
+                                <a class="btn btn-default" role="button" href="{% url "spirit:comment:publish" topic_id=topic.pk pk=c.pk %}" >{% trans "quote" %}</a>
+                                <a class="btn btn-default" role="button" href="#reply" >{% trans "reply" %}</a>
                             {% endifnotequal %}
                         {% endif %}
-                    </ul>
+                    </div>
 
                     <div class="share js-share-{{ c.pk }}" style="display: none;">
                         <div class="share-box">
-                            <a class="share-close" href="#" ><i class="fa fa-times"></i> {% trans "close" %}</a>
+                            <a class="share-close" href="#" ><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> {% trans "close" %}</a>
 
                             {% with comment_url=c.get_absolute_url %}
                                 <input class="share-url" type="text" value="{% get_share_url url=comment_url %}" />
                                 <ul class="share-actions">
-                                    <li><a href="{% get_twitter_share_url url=comment_url title=topic.title %}" target="_blank"><i class="fa fa-twitter"></i></a></li><!--
-                                 --><li><a href="{% get_facebook_share_url url=comment_url title=topic.title %}" target="_blank"><i class="fa fa-facebook"></i></a></li><!--
-                                 --><li><a href="{% get_gplus_share_url url=comment_url %}" target="_blank"><i class="fa fa-google-plus"></i></a></li><!--
-                                 --><li><a href="{% get_email_share_url url=comment_url title=topic.title %}" ><i class="fa fa-envelope"></i></a></li>
+                                    <li><a href="{% get_twitter_share_url url=comment_url title=topic.title %}" target="_blank"><i class="fa fa-twitter"></i>Twitter</a></li><!--
+                                 --><li><a href="{% get_facebook_share_url url=comment_url title=topic.title %}" target="_blank"><i class="fa fa-facebook"></i>Facebook</a></li><!--
+                                 --><li><a href="{% get_gplus_share_url url=comment_url %}" target="_blank"><i class="fa fa-google-plus"></i>Google Plus</a></li><!--
+                                 --><li><a href="{% get_email_share_url url=comment_url title=topic.title %}" ><i class="fa fa-envelope"></i>Email</a></li>
                                 </ul>
                             {% endwith %}
 
@@ -122,6 +122,7 @@
             {% endif %}
 
 		</div>
+    <hr>
 
 	{% endfor %}
 
