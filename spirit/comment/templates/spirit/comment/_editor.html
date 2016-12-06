@@ -2,15 +2,29 @@
 {% load static from staticfiles %}
 
 <div class="comment-text js-box-preview-content" style="display:none;"></div>
-<ul class="reply-markdown">
-	<li><a class="js-box-bold" href="#" title="{% trans "Bold" %}"><i class="fa fa-bold"></i></a></li><!--
- --><li><a class="js-box-italic" href="#" title="{% trans "Italic" %}"><i class="fa fa-italic"></i></a></li><!--
- --><li><a class="js-box-list" href="#" title="{% trans "List" %}"><i class="fa fa-list"></i></a></li><!--
- --><li><a class="js-box-url" href="#" title="{% trans "URL" %}"><i class="fa fa-link"></i></a></li><!--
- --><li><a class="js-box-image" href="#" title="{% trans "Image" %}"><i class="fa fa-picture-o"></i></a></li><!--
- --><li><a class="js-box-poll" href="#" title="{% trans "Poll" %}"><i class="fa fa-bar-chart-o"></i></a></li><!--
- --><li><a class="js-box-preview" href="#" title="{% trans "Preview" %}"><i class="fa fa-eye"></i></a></li>
-</ul>
+<div class="btn-group" role="group" aria-label="...">
+	<a class="btn btn-default js-box-bold" href="#" title="{% trans "Bold" %}" role="button">
+		<span class="glyphicon glyphicon glyphicon-bold" aria-hidden="true"></span>
+	</a>
+  <a class="btn btn-default js-box-italic" href="#" title="{% trans "Italic" %}" role="button">
+		<span class="glyphicon glyphicon glyphicon-italic" aria-hidden="true"></span>
+	</a>
+  <a class="btn btn-default js-box-list" href="#" title="{% trans "List" %}" role="button">
+		<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+	</a>
+  <a class="btn btn-default js-box-url" href="#" title="{% trans "URL" %}" role="button">
+		<span class="glyphicon glyphicon-link" aria-hidden="true"></span>
+	</a>
+  <a class="btn btn-default js-box-image" href="#" title="{% trans "Image" %}" role="button">
+		<span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
+	</a>
+  <a class="btn btn-default js-box-poll" href="#" title="{% trans "Poll" %}" role="button">
+		<span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
+	</a>
+  <a class="btn btn-default js-box-preview" href="#" title="{% trans "Preview" %}" role="button">
+		<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+	</a>
+</div>
 
 <script>
     $( document ).ready(function() {

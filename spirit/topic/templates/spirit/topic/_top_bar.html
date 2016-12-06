@@ -1,32 +1,47 @@
 {% load i18n %}
 
-    <div class="container">
-		<div class="categories js-tabs-container">
-            {% if category %}
-			    <a class="dropdown-button js-tab" href="#" data-related=".js-categories-content">{{ category.title }} <i class="fa fa-chevron-down"></i></a>
-			{% else %}
-                <a class="dropdown-button js-tab" href="#" data-related=".js-categories-content">{% trans "All Categories" %} <i class="fa fa-chevron-down"></i></a>
-            {% endif %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-12 col-sm-5">
+      <div class="btn-group" style="width:100%;">
+        {% if category %}
+        <button type="button" class="btn btn-default dropdown-toggle"
+           style="width:100%;" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">{{ category.title }}
+          <span class="caret"></span>
+        </button>
+        {% else %}
+        <button type="button" class="btn btn-default dropdown-toggle"
+           style="width:100%;" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">{% trans "All Categories" %}
+          <span class="caret"></span>
+        </button>
+        {% endif %}
 
-			<div class="tab-content js-tab-content js-categories-content">
-				<ul class="menu">
-                    {% for c in categories %}
-                        <li><a class="menu-link" href="{{ c.get_absolute_url }}" >{{ c.title }}</a></li>
-                    {% endfor %}
-                    {% if category.parent %}
-                        <li><a class="menu-link" href="{{ category.parent.get_absolute_url }}" >{% trans "All Subcategories" %}</a></li>
-                    {% else %}
-                        <li><a class="menu-link" href="{% url "spirit:topic:index-active" %}" >{% trans "All Categories" %}</a></li>
-                    {% endif %}
-				</ul>
-			</div>
-		</div>
+        <ul class="dropdown-menu" style="width:100%;">
+          {% for c in categories %}
+          <li><a class="menu-link" href="{{ c.get_absolute_url }}" >{{ c.title }}</a></li>
+          {% endfor %}
 
-        <div class="new-topic">
-            {% if category %}
-                <a class="button" href="{% url "spirit:topic:publish" category.pk %}">{% trans "Create Topic" %}</a>
-            {% else %}
-                <a class="button" href="{% url "spirit:topic:publish" %}">{% trans "Create Topic" %}</a>
-            {% endif %}
-		</div>
-	</div>
+          {% if category.parent %}
+          <li><a class="menu-link" href="{{ category.parent.get_absolute_url }}" >{% trans "All Subcategories" %}</a></li>
+          {% else %}
+          <li><a class="menu-link" href="{% url "spirit:topic:index-active" %}" >{% trans "All Categories" %}</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-xs-12 visible-xs-block" style="height: 10px;">&nbsp;</div>
+
+    <div class="col-xs-12 col-sm-3 col-sm-offset-4">
+        {% if category %}
+        <a class="button btn btn-default btn-primary" style="width:100%;"
+           href="{% url "spirit:topic:publish" category.pk %}">{% trans "Create Topic" %}</a>
+        {% else %}
+        <a class="button btn btn-default btn-primary" style="width:100%;"
+           href="{% url "spirit:topic:publish" %}">{% trans "Create Topic" %}</a>
+        {% endif %}
+    </div>
+  </div>
+</div>

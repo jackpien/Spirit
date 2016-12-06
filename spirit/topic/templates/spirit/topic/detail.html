@@ -6,63 +6,66 @@
 
 {% block content %}
 
-        <ul class="nav">
-            <li><a href="{% url "spirit:index" %}" >{% trans "Main" %}</a><i class="fa fa-chevron-right"></i></li>
+        <ol class="breadcrumb">
+            <li><a href="{% url "spirit:index" %}" >{% trans "Main" %}</a></li>
 
             {% if topic.category.parent_id %}
-               <li><a href="{{ topic.category.parent.get_absolute_url }}" >{{ topic.category.parent.title }}</a><i class="fa fa-chevron-right"></i></li>
+               <li><a href="{{ topic.category.parent.get_absolute_url }}" >{{ topic.category.parent.title }}</a><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></li>
             {% endif %}
 
 		    <li><a href="{{ topic.category.get_absolute_url }}" >{{ topic.category.title }}</a></li>
-        </ul>
+        </ol>
 
         <h1 class="headline">
             {% if topic.is_pinned or topic.is_globally_pinned %}
-                <i class="fa fa-thumb-tack"></i>
+                <span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span>
             {% endif %}
             {% if topic.is_closed %}
-                <i class="fa fa-lock"></i>
+                <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
             {% endif %}
 
             {{ topic.title }}
 
-            {% if user.st.is_moderator %}
-                <a class="head-edit-link" href="{% url "spirit:topic:update" topic.pk %}"><i class="fa fa-pencil"></i> {% trans "edit" %}</a>
-            {% elif user.pk == topic.user.pk and not topic.is_closed %}
-                <a class="head-edit-link" href="{% url "spirit:topic:update" topic.pk %}"><i class="fa fa-pencil"></i> {% trans "edit" %}</a>
-            {% endif %}
+            <small>
+              {% if user.st.is_moderator %}
+                  <a class="head-edit-link" href="{% url "spirit:topic:update" topic.pk %}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> {% trans "edit" %}</a>
+              {% elif user.pk == topic.user.pk and not topic.is_closed %}
+                  <a class="head-edit-link" href="{% url "spirit:topic:update" topic.pk %}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>{% trans "edit" %}</a>
+              {% endif %}
+            </small>
         </h1>
+        <hr>
 
         {% if user.st.is_moderator %}
             <div class="topic-moderation js-tabs-container">
-                <a class="dropdown-button js-tab" href="#" data-related=".js-mod-content"><i class="fa fa-cogs"></i></a>
+                <a class="dropdown-button js-tab" href="#" data-related=".js-mod-content"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>
 
                 <div class="tab-content js-tab-content js-mod-content">
                     <ul class="menu">
-                        <li><a class="menu-link js-show-move-comments" href="#" ><i class="fa fa-comments"></i> {% trans "Select comments to move" %}</a></li>
+                        <li><a class="menu-link js-show-move-comments" href="#" ><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> {% trans "Select comments to move" %}</a></li>
 
                         {% if topic.is_removed %}
-                            <li><a class="menu-link js-post" href="{% url "spirit:topic:moderate:undelete" topic.pk %}" ><i class="fa fa-trash-o"></i> {% trans "Undelete topic" %}</a></li>
+                            <li><a class="menu-link js-post" href="{% url "spirit:topic:moderate:undelete" topic.pk %}" ><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> {% trans "Undelete topic" %}</a></li>
                         {% else %}
-                            <li><a class="menu-link js-post" href="{% url "spirit:topic:moderate:delete" topic.pk %}" ><i class="fa fa-trash-o"></i> {% trans "Delete topic" %}</a></li>
+                            <li><a class="menu-link js-post" href="{% url "spirit:topic:moderate:delete" topic.pk %}" ><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> {% trans "Delete topic" %}</a></li>
                         {% endif %}
 
                         {% if topic.is_closed %}
-                            <li><a class="menu-link js-post" href="{% url "spirit:topic:moderate:unlock" topic.pk %}" ><i class="fa fa-unlock"></i> {% trans "Open topic" %}</a></li>
+                            <li><a class="menu-link js-post" href="{% url "spirit:topic:moderate:unlock" topic.pk %}" ><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> {% trans "Open topic" %}</a></li>
                         {% else %}
-                            <li><a class="menu-link js-post" href="{% url "spirit:topic:moderate:lock" topic.pk %}" ><i class="fa fa-lock"></i> {% trans "Close topic" %}</a></li>
+                            <li><a class="menu-link js-post" href="{% url "spirit:topic:moderate:lock" topic.pk %}" ><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> {% trans "Close topic" %}</a></li>
                         {% endif %}
 
                         {% if topic.is_pinned %}
-                            <li><a class="menu-link js-post" href="{% url "spirit:topic:moderate:unpin" topic.pk %}" ><i class="fa fa-thumb-tack"></i> {% trans "Unpin topic" %}</a></li>
+                            <li><a class="menu-link js-post" href="{% url "spirit:topic:moderate:unpin" topic.pk %}" ><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span> {% trans "Unpin topic" %}</a></li>
                         {% else %}
-                            <li><a class="menu-link js-post" href="{% url "spirit:topic:moderate:pin" topic.pk %}" ><i class="fa fa-thumb-tack"></i> {% trans "Pin topic" %}</a></li>
+                            <li><a class="menu-link js-post" href="{% url "spirit:topic:moderate:pin" topic.pk %}" ><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span> {% trans "Pin topic" %}</a></li>
                         {% endif %}
 
                         {% if topic.is_globally_pinned %}
-                            <li><a class="menu-link js-post" href="{% url "spirit:topic:moderate:global-unpin" topic.pk %}" ><i class="fa fa-thumb-tack"></i> {% trans "Unpin topic globally" %}</a></li>
+                            <li><a class="menu-link js-post" href="{% url "spirit:topic:moderate:global-unpin" topic.pk %}" ><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span> {% trans "Unpin topic globally" %}</a></li>
                         {% else %}
-                            <li><a class="menu-link js-post" href="{% url "spirit:topic:moderate:global-pin" topic.pk %}" ><i class="fa fa-thumb-tack"></i> {% trans "Pin topic globally" %}</a></li>
+                            <li><a class="menu-link js-post" href="{% url "spirit:topic:moderate:global-pin" topic.pk %}" ><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span> {% trans "Pin topic globally" %}</a></li>
                         {% endif %}
                     </ul>
                 </div>

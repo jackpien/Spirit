@@ -13,14 +13,14 @@
             {% csrf_token %}
             {% include "spirit/_form.html" %}
 
-            <input class="button" type="submit" name="post" value="{% trans "Login" %}" />
+            <input class="button btn btn-default" type="submit" name="post" value="{% trans "Login" %}" />
         </form>
     </div>
 
     <div class="login-links">
 		<a class="login-link" href="{% url "spirit:user:auth:register" %}">{% trans "Create an account" %}</a>
 		<a class="login-link" href="{% url "spirit:user:auth:password-reset" %}">{% trans "I don't know my password" %}</a>
-        <a class="login-link" href="{% url "spirit:user:auth:resend-activation" %}">{% trans "Resend activation email" %}</a>
+    <a class="login-link" href="{% url "spirit:user:auth:resend-activation" %}">{% trans "Resend activation email" %}</a>
 	</div>
 
 {% endblock %}
