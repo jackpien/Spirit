@@ -1,17 +1,41 @@
 {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
 
-{{ form.non_field_errors }}
+{% if form.non_field_errors %}
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="alert alert-danger" role="alert">
+        {{ form.non_field_errors }}
+      </div>
+    </div>
+  </div>
+{% endif %}
 
 {% for field in form.hidden_fields %}
-    {{ field.errors }}
-    {{ field }}
+  <div class="row">
+    <div class="col-xs-12">
+      {% if field.errors %}
+        <div class="alert alert-danger" role="alert">
+          {{ field.errors }}
+        </div>
+      {% endif %}
+      {{ field }}
+    </div>
+  </div>
 {% endfor %}
 
 {% for field in form.visible_fields %}
-    <div class="field form-group">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="field form-group">
         {{ field.label_tag }}
-        {{ field.errors }}
+        {% if field.errors %}
+        <div class="alert alert-danger" role="alert">
+          {{ field.errors }}
+        </div>
+        {% endif %}
         {{ field }}
         {{ field.help_text }}
+      </div>
     </div>
+  </div>
 {% endfor %}
