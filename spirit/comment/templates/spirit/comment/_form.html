@@ -1,21 +1,28 @@
 {% load i18n %}
 
 <form action="{% url "spirit:comment:publish" topic_id %}" method="post" class="js-reply">
-    {% csrf_token %}
-    {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
+  <div class="row">
+    <div class="col-xs-12 col-sm-12">
+      {% csrf_token %}
+      {% if next %}<input type="hidden" name="next" value="{{ next }}" />{% endif %}
 
-    {{ form.non_field_errors }}
+      {{ form.non_field_errors }}
 
-    {% for field in form %}
-        {{ field.errors }}
-        {{ field }}
-    {% endfor %}
+      {% for field in form %}
+          {{ field.errors }}
+          {{ field }}
+      {% endfor %}
+    </div>
+  </div>
 
-    <div class="container">
+  <div class="row">
+    <div class="col-xs-12" style="height: 10px;">&nbsp;</div>
+    <div class="col-xs-12 col-sm-12">
         {% include "spirit/comment/_editor.html" %}
 
         <input class="btn btn-primary button reply-button" type="submit" value="{% trans "Publish" %}" />
     </div>
+  </div>
 </form>
 
 

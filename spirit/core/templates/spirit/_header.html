@@ -15,14 +15,14 @@
       </div>
 
       <div class="collapse navbar-collapse" id="navbar-collapse-1">
-        {% if user.is_authenticated %}
-          {% has_topic_notifications user as has_notifications %}
-            <ul class="nav navbar-nav navbar-right">
-              <li><a class="header-tab-link js-tab" onClick="alert('need to immplement')"
+        <ul class="nav navbar-nav navbar-right">
+          {% if user.is_authenticated %}
+            {% has_topic_notifications user as has_notifications %}
+              <li><a class="header-tab-link js-tab" onClick="alert('need to implement')"
                      data-related=".js-search-content"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></li>
               <li><a class="header-tab-link js-tab-notification{% if has_notifications %} is-highlighted{% endif %}"
                      href="{% url "spirit:topic:notification:index" %}" data-related=".js-notifications-content"
-                     onClick="alert('need to immplement')">
+                     onClick="alert('need to implement')">
                      <span class="glyphicon glyphicon-bell" aria-hidden="true"></span></a></li>
               <li class="dropdown">
                 <a class="dropdown-toggle header-tab-link js-tab"
@@ -42,12 +42,13 @@
                   <li><a class="menu-link js-post" href="{% url "spirit:user:auth:logout" %}?next={% firstof request.get_full_path|urlencode '/' %}">{% trans "Log out" %}</a></li>
                 </ul>
               </li>
+              {% else %}
+              <li><a class="header-link" style="text-align: right;" href="{% url "spirit:user:auth:login" %}?next={% firstof request.get_full_path|urlencode '/' %}">{% trans "Log in" %}</a></li>
+              {% endif %}
             </ul>
 
 
-        {% else %}
-          <h3><a class="header-link .h3" style="text-align: right;" href="{% url "spirit:user:auth:login" %}?next={% firstof request.get_full_path|urlencode '/' %}">{% trans "Log in" %}</a></h3>
-        {% endif %}
+
         </div>
       </div>
     </div>

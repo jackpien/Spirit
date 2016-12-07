@@ -41,23 +41,34 @@
                 </div>
 
                 {% if not c.action %}
-                    <div class="comment-actions btn-group" style="float:right;">
-                        {% if user.is_authenticated %}
-                            {% if user.st.is_moderator %}
-                                <a class="btn btn-default" role="button" href="{% url "spirit:comment:delete" c.pk %}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> {% trans "delete" %}</a>
-                            {% endif %}
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="btn-toolbar" role="toolbar" style="float:right;">
+                      <div class="comment-actions btn-group" role="group" style="float:right;">
+                          {% if user.is_authenticated %}
+                              {% if user.st.is_moderator %}
+                                  <a class="btn btn-default" role="button"
+                                     href="{% url "spirit:comment:delete" c.pk %}">
+                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                    {% trans "delete" %}
+                                  </a>
+                              {% endif %}
 
-                            <a class="btn btn-default" role="button" href="{% url "spirit:comment:flag:create" c.pk %}"><span class="glyphicon glyphicon-flag" aria-hidden="true"></span>{% trans "report" %}</a>
-                        {% endif %}
+                              <a class="btn btn-default" role="button" href="{% url "spirit:comment:flag:create" c.pk %}"><span class="glyphicon glyphicon-flag" aria-hidden="true"></span>{% trans "report" %}</a>
+                          {% endif %}
 
-                        <a class="btn btn-default" role="button" class="js-share" href="#" data-dialog=".js-share-{{ c.pk }}"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> {% trans "share" %}</a>
+                          <a class="btn btn-default" role="button" class="js-share" href="#" data-dialog=".js-share-{{ c.pk }}"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> {% trans "share" %}</a>
+                      </div>
 
+                      <div class="col-xs-12 visible-xs-block" style="height: 10px;">&nbsp;</div>
+
+                      <div class="btn-group" role="group" style="float:right;">
                         {% if user.is_authenticated %}
                             {% if c.like %}
                                 <a class="btn btn-default js-like" role="button" href="{% url "spirit:comment:like:delete" c.like.pk %}" data-count="{{ c.likes_count }}" ><span class="glyphicon glyphicon-heart" aria-hidden="true"></span> {% trans "remove like" %} ({{ c.likes_count }})</a>
                             {% else %}
                                 {% ifnotequal c.user user  %}
-                                    <a class="js-like" class="like" class="btn btn-default" role="button" href="{% url "spirit:comment:like:create" c.pk %}" data-count="{{ c.likes_count }}" ><span class="glyphicon glyphicon-heart" aria-hidden="true"></span> {% trans "like" %} ({{ c.likes_count }})</a>
+                                    <a class="btn btn-default js-like" class="like" class="btn btn-default" role="button" href="{% url "spirit:comment:like:create" c.pk %}" data-count="{{ c.likes_count }}" ><span class="glyphicon glyphicon-heart" aria-hidden="true"></span> {% trans "like" %} ({{ c.likes_count }})</a>
                                 {% else %}
                                     <button type="button" class="btn btn-default" disabled="disabled"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span> ({{ c.likes_count }})</button>
                                 {% endifnotequal %}
@@ -72,7 +83,13 @@
                                 <a class="btn btn-default" role="button" href="#reply" >{% trans "reply" %}</a>
                             {% endifnotequal %}
                         {% endif %}
-                    </div>
+                      </div>
+                      </div>
+
+                  </div>
+
+                </div>
+
 
                     <div class="share js-share-{{ c.pk }}" style="display: none;">
                         <div class="share-box">
@@ -90,6 +107,9 @@
 
                         </div>
                     </div>
+
+
+
                 {% endif %}
 
             {% else %}

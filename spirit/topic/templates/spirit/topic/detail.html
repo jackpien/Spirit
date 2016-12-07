@@ -4,115 +4,138 @@
 
 {% block title %}{{ topic.title }}{% endblock %}
 
+{% block head-extra %}
+  <script>
+   $(document).ready(function() {
+     $("textarea").addClass("form-control");
+   });
+  </script>
+{% endblock %}
+
 {% block content %}
 <div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-12">
+      <ol class="breadcrumb">
+          <li><a href="{% url "spirit:index" %}" >{% trans "Main" %}</a></li>
 
+          {% if topic.category.parent_id %}
+             <li><a href="{{ topic.category.parent.get_absolute_url }}" >{{ topic.category.parent.title }}</a><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></li>
+          {% endif %}
 
-        <ol class="breadcrumb">
-            <li><a href="{% url "spirit:index" %}" >{% trans "Main" %}</a></li>
+      <li><a href="{{ topic.category.get_absolute_url }}" >{{ topic.category.title }}</a></li>
+      </ol>
+    </div>
+  </div>
 
-            {% if topic.category.parent_id %}
-               <li><a href="{{ topic.category.parent.get_absolute_url }}" >{{ topic.category.parent.title }}</a><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></li>
+  <div class="row">
+    <div class="col-xs-12">
+      <h1 class="headline">
+          {% if topic.is_pinned or topic.is_globally_pinned %}
+              <span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span>
+          {% endif %}
+          {% if topic.is_closed %}
+              <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
+          {% endif %}
+
+          {{ topic.title }}
+
+          <small>
+            {% if user.st.is_moderator %}
+                <a class="head-edit-link" href="{% url "spirit:topic:update" topic.pk %}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> {% trans "edit" %}</a>
+            {% elif user.pk == topic.user.pk and not topic.is_closed %}
+                <a class="head-edit-link" href="{% url "spirit:topic:update" topic.pk %}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>{% trans "edit" %}</a>
             {% endif %}
+          </small>
+      </h1>
+    </div>
+  </div>
 
-		    <li><a href="{{ topic.category.get_absolute_url }}" >{{ topic.category.title }}</a></li>
-        </ol>
+  <div class="row">
+    <div class="col-xs-12">
+      {% if user.st.is_moderator %}
+          <div class="btn-group topic-moderation js-tabs-container" style="float:right; margin-bottom:1%;">
+              <a class="btn btn-default dropdown-toggle dropdown-button js-tab" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#" data-related=".js-mod-content"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>
+              <ul class="dropdown-menu dropdown-menu-right">
+                      <li><a class="menu-link js-show-move-comments" href="#" ><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> {% trans "Select comments to move" %}</a></li>
 
-        <h1 class="headline">
-            {% if topic.is_pinned or topic.is_globally_pinned %}
-                <span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span>
+                      {% if topic.is_removed %}
+                          <li><a class="menu-link js-post" href="{% url "spirit:topic:moderate:undelete" topic.pk %}" ><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> {% trans "Undelete topic" %}</a></li>
+                      {% else %}
+                          <li><a class="menu-link js-post" href="{% url "spirit:topic:moderate:delete" topic.pk %}" ><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> {% trans "Delete topic" %}</a></li>
+                      {% endif %}
+
+                      {% if topic.is_closed %}
+                          <li><a class="menu-link js-post" href="{% url "spirit:topic:moderate:unlock" topic.pk %}" ><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> {% trans "Open topic" %}</a></li>
+                      {% else %}
+                          <li><a class="menu-link js-post" href="{% url "spirit:topic:moderate:lock" topic.pk %}" ><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> {% trans "Close topic" %}</a></li>
+                      {% endif %}
+
+                      {% if topic.is_pinned %}
+                          <li><a class="menu-link js-post" href="{% url "spirit:topic:moderate:unpin" topic.pk %}" ><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span> {% trans "Unpin topic" %}</a></li>
+                      {% else %}
+                          <li><a class="menu-link js-post" href="{% url "spirit:topic:moderate:pin" topic.pk %}" ><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span> {% trans "Pin topic" %}</a></li>
+                      {% endif %}
+
+                      {% if topic.is_globally_pinned %}
+                          <li><a class="menu-link js-post" href="{% url "spirit:topic:moderate:global-unpin" topic.pk %}" ><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span> {% trans "Unpin topic globally" %}</a></li>
+                      {% else %}
+                          <li><a class="menu-link js-post" href="{% url "spirit:topic:moderate:global-pin" topic.pk %}" ><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span> {% trans "Pin topic globally" %}</a></li>
+                      {% endif %}
+              </ul>
+          </div>
+
+
+          <div class="move-comments" style="display:none;">
+              <div class="move-container">
+                  <label class="move-label">{% trans "Topic id" %}:</label><!--
+               --><div class="move-input"><input id="id_move_comments_topic" name="topic" type="text" value="" /></div><!--
+               --><a class="move-link js-move-comments" href="#move_to">{% trans "Move" %}</a>
+              </div>
+          </div>
+      {% endif %}
+    </div>
+  </div>
+  <hr>
+
+  <div class="row">
+    <div class="col-xs-12">
+      {% include "spirit/comment/_render_list.html" %}
+    </div>
+  </div>
+
+
+    <div class="row">
+      <div class="col-xs-12">
+        {% render_paginator page=comments %}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="notify">
+            {% if user.is_authenticated %}
+                {% render_notification_form user=user topic=topic %}
+            {% elif not topic.is_closed %}
+                <a class="button btn btn-default" role="button" href="{% url "spirit:comment:publish" topic_id=topic.pk %}">{% trans "Reply" %}</a>
             {% endif %}
-            {% if topic.is_closed %}
-                <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
-            {% endif %}
-
-            {{ topic.title }}
-
-            <small>
-              {% if user.st.is_moderator %}
-                  <a class="head-edit-link" href="{% url "spirit:topic:update" topic.pk %}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> {% trans "edit" %}</a>
-              {% elif user.pk == topic.user.pk and not topic.is_closed %}
-                  <a class="head-edit-link" href="{% url "spirit:topic:update" topic.pk %}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>{% trans "edit" %}</a>
-              {% endif %}
-            </small>
-        </h1>
-        <hr>
-
-        {% if user.st.is_moderator %}
-            <div class="topic-moderation js-tabs-container">
-                <a class="dropdown-button js-tab" href="#" data-related=".js-mod-content"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></a>
-
-                <div class="tab-content js-tab-content js-mod-content">
-                    <ul class="menu">
-                        <li><a class="menu-link js-show-move-comments" href="#" ><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> {% trans "Select comments to move" %}</a></li>
-
-                        {% if topic.is_removed %}
-                            <li><a class="menu-link js-post" href="{% url "spirit:topic:moderate:undelete" topic.pk %}" ><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> {% trans "Undelete topic" %}</a></li>
-                        {% else %}
-                            <li><a class="menu-link js-post" href="{% url "spirit:topic:moderate:delete" topic.pk %}" ><span class="glyphicon glyphicon-trash" aria-hidden="true"></span> {% trans "Delete topic" %}</a></li>
-                        {% endif %}
-
-                        {% if topic.is_closed %}
-                            <li><a class="menu-link js-post" href="{% url "spirit:topic:moderate:unlock" topic.pk %}" ><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> {% trans "Open topic" %}</a></li>
-                        {% else %}
-                            <li><a class="menu-link js-post" href="{% url "spirit:topic:moderate:lock" topic.pk %}" ><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> {% trans "Close topic" %}</a></li>
-                        {% endif %}
-
-                        {% if topic.is_pinned %}
-                            <li><a class="menu-link js-post" href="{% url "spirit:topic:moderate:unpin" topic.pk %}" ><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span> {% trans "Unpin topic" %}</a></li>
-                        {% else %}
-                            <li><a class="menu-link js-post" href="{% url "spirit:topic:moderate:pin" topic.pk %}" ><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span> {% trans "Pin topic" %}</a></li>
-                        {% endif %}
-
-                        {% if topic.is_globally_pinned %}
-                            <li><a class="menu-link js-post" href="{% url "spirit:topic:moderate:global-unpin" topic.pk %}" ><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span> {% trans "Unpin topic globally" %}</a></li>
-                        {% else %}
-                            <li><a class="menu-link js-post" href="{% url "spirit:topic:moderate:global-pin" topic.pk %}" ><span class="glyphicon glyphicon-pushpin" aria-hidden="true"></span> {% trans "Pin topic globally" %}</a></li>
-                        {% endif %}
-                    </ul>
-                </div>
-            </div>
-
-
-            <div class="move-comments" style="display:none;">
-                <div class="move-container">
-                    <label class="move-label">{% trans "Topic id" %}:</label><!--
-                 --><div class="move-input"><input id="id_move_comments_topic" name="topic" type="text" value="" /></div><!--
-                 --><a class="move-link js-move-comments" href="#move_to">{% trans "Move" %}</a>
-                </div>
-            </div>
-        {% endif %}
-
-        {% include "spirit/comment/_render_list.html" %}
-
-        <div class="container">
-            {% render_paginator page=comments %}
-
-            <div class="notify">
-                {% if user.is_authenticated %}
-                    {% render_notification_form user=user topic=topic %}
-                {% elif not topic.is_closed %}
-                    <a class="button btn btn-default" role="button" href="{% url "spirit:comment:publish" topic_id=topic.pk %}">{% trans "Reply" %}</a>
-                {% endif %}
-            </div>
         </div>
+      </div>
+    </div>
 
-        {% if user.is_authenticated %}
-            {% if not topic.is_closed %}
-                <div id="reply" class="reply">
+  {% if user.is_authenticated %}
+    {% if not topic.is_closed %}
+      <div class="comment-media row">
+        <div class="col-xs-12" style="height: 10px;">&nbsp;</div>
+          <div class="comment-img col-xs-2 col-sm-1">
+            <img class="comment-avatar img-circle" src="{% get_gravatar_url user=user size=50 %}" />
+          </div>
 
-                    <div class="comment-media">
-                        <div class="comment-img">
-                            <img class="comment-avatar img-circle" src="{% get_gravatar_url user=user size=50 %}" />
-                        </div>
-
-                        <div class="comment-body">
-                            {% render_comments_form topic=topic %}
-                        </div>
-                    </div>
-
-                </div>
-            {% endif %}
+          <div class="comment-body col-xs-10 col-sm-11">
+            {% render_comments_form topic=topic %}
+          </div>
+      </div>
+    {% endif %}
 </div>
 
             <script>

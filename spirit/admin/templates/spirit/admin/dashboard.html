@@ -5,49 +5,95 @@
 {% block title %}{% trans "Dashboard" %}{% endblock %}
 
 {% block content %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-12">
+      {% include "spirit/admin/_side_menu.html" with active="dashboard" %}
+    </div>
+  </div>
 
-    {% include "spirit/admin/_side_menu.html" with active="dashboard" %}
 
-    <h1 class="headline">{% trans "Dashboard" %}</h1>
+    <div class="row">
+      <div class="col-xs-12">
+        <h1>{% trans "Dashboard" %}</h1>
+      </div>
+    </div>
 
-    <div class="messages-info">
-		<div class="message-title is-info">{% trans "Software" %}</div>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="alert alert-info">
+          <div class="message-title is-info">{% trans "Software" %}</div>
 
-		<ul class="inline-list">
-			<li>{% trans "Installed" %}: {{ version }}</li><!--
-		 --><li>{% trans "Latest" %}: ??</li>
-		</ul>
-	</div>
+          <ul class="inline-list">
+            <li>{% trans "Installed" %}: {{ version }}</li><!--
+           --><li>{% trans "Latest" %}: ??</li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
-    <h2 class="headline">{% trans "Statistics" %}</h2>
+    <div class="row">
+      <div class="col-xs-12">
+        <h2 class="headline">{% trans "Statistics" %}</h2>
+      </div>
+    </div>
 
-	<div>
+    <div class="row">
+      <div class="col-xs-6 col-sm-3">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="panel-title">{% trans "Members" %}</div>
+          </div>
+          <div class="panel-body">{{ users_count }}</div>
+        </div>
+  		</div>
 
-		<div class="statistics-box">
-			<div class="statistics-title">{% trans "Members" %}</div>
-			<div class="statistics-count">{{ users_count }}</div>
-		</div>
-		<div class="statistics-box">
-			<div class="statistics-title">{% trans "Topics" %}</div>
-			<div class="statistics-count">{{ topics_count }}</div>
-		</div>
-		<div class="statistics-box">
-			<div class="statistics-title">{% trans "Comments" %}</div>
-			<div class="statistics-count">{{ comments_count }}</div>
-		</div>
-		<div class="statistics-box">
-			<div class="statistics-title">{% trans "Likes" %}</div>
-			<div class="statistics-count">{{ likes_count }}</div>
-		</div>
-		<div class="statistics-box">
-			<div class="statistics-title">{% trans "Flags" %}</div>
-			<div class="statistics-count">{{ flags_count }}</div>
-		</div>
-		<div class="statistics-box">
-			<div class="statistics-title">{% trans "Categories" %}</div>
-			<div class="statistics-count">{{ category_count }}</div>
-		</div>
+  		<div class="col-xs-6 col-sm-3">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="panel-title">{% trans "Topics" %}</div>
+          </div>
+          <div class="panel-body">{{ topics_count }}</div>
+        </div>
+  		</div>
 
-	</div>
+  		<div class="col-xs-6 col-sm-3">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="panel-title">{% trans "Comments" %}</div>
+          </div>
+          <div class="panel-body">{{ comments_count }}</div>
+        </div>
+  		</div>
+
+  		<div class="col-xs-6 col-sm-3">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="panel-title">{% trans "Likes" %}</div>
+          </div>
+          <div class="panel-body">{{ likes_count }}</div>
+        </div>
+  		</div>
+
+  		<div class="col-xs-6 col-sm-3">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="panel-title">{% trans "Flags" %}</div>
+          </div>
+          <div class="panel-body">{{ flags_count }}</div>
+        </div>
+  		</div>
+
+  		<div class="col-xs-6 col-sm-3">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="panel-title">{% trans "Categories" %}</div>
+          </div>
+          <div class="panel-body">{{ category_count }}</div>
+        </div>
+  		</div>
+
+    </div>
+</div>
 
 {% endblock %}

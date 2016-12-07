@@ -19,13 +19,13 @@
             <a class="btn btn-default button" role="button" href="{% url "spirit:user:update" %}"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> {% trans "Preferences" %}</a>
         </div>
     {% else %}
-        <div class="private-message">
+        <div class="private-message" style="text-align:center;">
             <a class="btn btn-default button" role="button" href="{% url "spirit:topic:private:publish" user_id=p_user.pk %}"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> {% trans "Private Message" %}</a>
         </div>
     {% endifequal %}
 
     {% if user.st.is_administrator %}
-        <div class="profile-preferences">
+        <div class="profile-preferences" style="text-align:center;">
             <a class="btn btn-default button" role="button" href="{% url "spirit:admin:user:edit" user_id=p_user.pk %}"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> {% trans "Edit user" %}</a>
         </div>
     {% endif %}

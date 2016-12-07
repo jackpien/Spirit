@@ -5,16 +5,17 @@
 {% block title %}{% trans "Basic Settings" %}{% endblock %}
 
 {% block content %}
-
+  <div class="container-fluid">
     {% include "spirit/admin/_side_menu.html" with active="basic_settings" %}
+      <h1 class="headline">{% trans "Basic Settings" %}</h1>
 
-    <h1 class="headline">{% trans "Basic Settings" %}</h1>
+      <form action="." method="post">
+          {% csrf_token %}
+          {% include "spirit/_form.html" %}
 
-    <form action="." method="post">
-        {% csrf_token %}
-        {% include "spirit/_form.html" %}
+          <input class="btn btn-default button" type="submit" name="post" value="{% trans "Save" %}" />
+      </form>
 
-        <input class="button" type="submit" name="post" value="{% trans "Save" %}" />
-    </form>
+  </div>
 
 {% endblock %}
