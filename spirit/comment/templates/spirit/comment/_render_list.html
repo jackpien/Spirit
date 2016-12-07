@@ -115,7 +115,7 @@
 
                 {% if user.st.is_moderator %}
                     <ul class="comment-actions">
-                        <li><a href="{% url "spirit:comment:undelete" c.pk %}"><i class="fa fa-times"></i> {% trans "undelete" %}</a></li>
+                        <li><a href="{% url "spirit:comment:undelete" c.pk %}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> {% trans "undelete" %}</a></li>
                     </ul>
                 {% endif %}
 

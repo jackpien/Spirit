@@ -1,26 +1,26 @@
 {% load spirit_tags i18n %}
-
+  <div class="container-fluid">
     <div class="comments">
 
         {% for c in comments %}
 
             <div class="comment">
 
-                <div class="comment-media">
-                    <div class="comment-img">
-                        <img class="comment-avatar" src="{% get_gravatar_url user=c.user size=50 %}" />
+                <div class="comment-media row">
+                    <div class="comment-img col-xs-2 col-sm-1">
+                        <img class="comment-avatar img-circle" src="{% get_gravatar_url user=c.user size=50 %}" />
                     </div>
 
-                    <div class="comment-body">
-                        <div class="comment-info">
+                    <div class="comment-body col-xs-10 col-sm-11">
+                        <div class="comment-info row">
 
-                            <div class="comment-username">
+                            <div class="comment-username col-xs-6 col-sm-3">
                                 <a href="{{ c.user.st.get_absolute_url }}">{{ c.user.username }}</a>
                             </div>
 
-                            <ul class="comment-date">
-                                <li><a href="{{ c.get_absolute_url }}"><i class="fa fa-comments"></i> {{ c.topic.title }}</a></li><!--
-			                 --><li title="{{ c.date }}">{{ c.date|shortnaturaltime }}</li>
+                            <ul class="comment-date col-xs-6 col-sm-9" style="text-align:right;">
+                                <li style="display:inline;"><a href="{{ c.get_absolute_url }}"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span> {{ c.topic.title }}</a></li><!--
+			                       --><li style="display:inline;  margin-left:2%;" title="{{ c.date }}">{{ c.date|shortnaturaltime }}</li>
                             </ul>
 
                         </div>
@@ -31,12 +31,16 @@
                     </div>
                 </div>
             </div>
+            <hr>
 
         {% empty %}
             <p>{% trans "There are no comments here, yet" %}</p>
         {% endfor %}
 
     </div>
+
+
+  </div>
 
 
     <script>

@@ -9,8 +9,8 @@
     {% include "spirit/_form.html" %}
 
     {% if notification.is_active %}
-        <input class="button is-undo" type="submit" value="{% trans "Unnotify Me" %}" />
+        <input class="btn btn-danger button is-undo" style="float:right;" type="submit" value="{% trans "Unnotify Me" %}" />
     {% else %}
-        <input class="button" type="submit" value="{% trans "Notify Me" %}" />
+        <input class="btn btn-default button" style="float:right;" type="submit" value="{% trans "Notify Me" %}" />
     {% endif %}
 </form>

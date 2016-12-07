@@ -36,7 +36,7 @@
               {% endif %}
             </div>
             <div><span class="glyphicon glyphicon-comment {% if t.has_new_comments %} js-comment-is-new{% endif %}" aria-hidden="true"></span> {{ t.comment_count }}</div>
-            <div title="{{ t.last_active }}"><span class="glyphicon glyphicon-time" aria-hidden="true"></span>{{ t.last_active|shortnaturaltime }}</div>
+            <div title="{{ t.last_active }}"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> {{ t.last_active|shortnaturaltime }}</div>
           </div>
         </li>
         {% empty %}
