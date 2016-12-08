@@ -5,11 +5,14 @@
 {% block title %}{% trans "Open flags" %}{% endblock %}
 
 {% block content %}
+<div class="container-fluid">
 
-    {% include "spirit/admin/_side_menu.html" with active="flags" %}
+  {% include "spirit/admin/_side_menu.html" with active="flags" %}
 
-    <h1 class="headline">{% trans "Open flags" %}</h1>
+  <h1 class="headline">{% trans "Open flags" %}</h1>
 
-    {% include "spirit/comment/flag/admin/_list.html" with active_tab="open" %}
+  {% include "spirit/comment/flag/admin/_list.html" with active_tab="open" %}
+  
+</div>
 
 {% endblock %}

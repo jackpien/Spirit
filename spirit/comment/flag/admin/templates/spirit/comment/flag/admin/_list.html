@@ -1,15 +1,30 @@
 {% load spirit_tags i18n %}
 
-{% include "spirit/comment/flag/admin/_tabs.html" with active_tab=active_tab %}
-
-<div class="rows">
-
-    {% for f in flags %}
-        <div class="row">
-            <a href="{{ f.comment.get_absolute_url }}">{{ f.comment.topic.title }}</a> <a class="row-edit" href="{% url "spirit:admin:flag:detail" pk=f.pk %}"><i class="fa fa-cog"></i> {% trans "moderate" %}</a>
-        </div>
-    {% endfor %}
-
+<div class="row">
+  <div class="col-xs-12">
+    {% include "spirit/comment/flag/admin/_tabs.html" with active_tab=active_tab %}
+  </div>
+  <div class="col-xs-12" style="height: 10px;">&nbsp;</div>
 </div>
+
+
+<ul class="list-group">
+  {% for f in flags %}
+  <li class="list-group-item">
+    <div class="row">
+      <div class="col-xs-10">
+        <a href="{{ f.comment.get_absolute_url }}">{{ f.comment.topic.title }}</a>
+      </div>
+
+      <div class="col-xs-2" style="text-align:right;">
+        <a class="row-edit" href="{% url "spirit:admin:flag:detail" pk=f.pk %}">
+          <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> {% trans "moderate" %}
+        </a>
+      </div>
+    </div>
+  </li>
+  {% endfor %}
+
+</ul>
 
 {% render_paginator flags %}
