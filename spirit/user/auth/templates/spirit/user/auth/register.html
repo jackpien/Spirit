@@ -5,27 +5,30 @@
 {% block title %}{% trans "Register" %}{% endblock %}
 
 {% block head-extra %}
-    <script>
+<script>
 
 	$( document ).ready(function() {
-
-        $( "input[name=honeypot]" ).hide();
-        $( "label[for=id_honeypot]" ).hide();
-
+    $( "input[name=honeypot]" ).hide();
+    $( "label[for=id_honeypot]" ).hide();
+    $("input, select, textarea").addClass("form-control");
 	});
 
-	</script>
+</script>
 {% endblock %}
 
 {% block content %}
 
-    <h1 class="headline">{% trans "Register" %}</h1>
+<div class="container-fluid">
 
-    <form action="." method="post">
-        {% csrf_token %}
-        {% include "spirit/_form.html" %}
+  <h1 class="headline">{% trans "Register" %}</h1>
 
-        <input class="button" type="submit" name="post" value="{% trans "Register" %}" />
-    </form>
+  <form action="." method="post">
+      {% csrf_token %}
+      {% include "spirit/_form.html" %}
+
+      <input class="btn btn-primary button" type="submit" name="post" value="{% trans "Register" %}" />
+  </form>
+
+</div>
 
 {% endblock %}

@@ -4,14 +4,26 @@
 
 {% block title %}{% trans "Moderate comment" %}{% endblock %}
 
+{% block head-extra %}
+  <script>
+   $(document).ready(function() {
+     $("input, select, textarea").addClass("form-control");
+   });
+  </script>
+{% endblock %}
+
 {% block content %}
 
-    <h1 class="headline">{% trans "Moderate comment" %}</h1>
+<div class="container-fluid">
 
-    <form action="." method="post">
-        {% csrf_token %}
+  <h1 class="headline">{% trans "Moderate comment" %}</h1>
 
-        <input class="btn btn-default button" type="submit" name="post" value="{% trans "Apply" %}" />
-    </form>
+  <form action="." method="post">
+    {% csrf_token %}
+
+    <input class="btn btn-primary button" type="submit" name="post" value="{% trans "Apply" %}" />
+  </form>
+
+</div>
 
 {% endblock %}

@@ -6,12 +6,16 @@
 
 {% block content %}
 
-    <h1 class="headline">{% trans "Notifications" %}</h1>
+<div class="container-fluid">
+  
+  <h1 class="headline">{% trans "Notifications" %}</h1>
 
-    <div class="rows">
-        {% include "spirit/topic/notification/_render_list.html" %}
-    </div>
+  <div class="rows">
+      {% include "spirit/topic/notification/_render_list.html" %}
+  </div>
 
-    {% render_paginator notifications %}
+  {% render_paginator notifications %}
+
+</div>
 
 {% endblock %}

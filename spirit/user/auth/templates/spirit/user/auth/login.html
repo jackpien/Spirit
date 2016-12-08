@@ -4,23 +4,51 @@
 
 {% block title %}{% trans "Login" %}{% endblock %}
 
+{% block head-extra %}
+  <script>
+   $(document).ready(function() {
+     $("input").addClass("form-control");
+   });
+  </script>
+{% endblock %}
+
 {% block content %}
 
-    <h1 class="headline">{% trans "Login" %}</h1>
+<div class="container-fluid">
 
-    <div class="login">
-        <form action="." method="post">
-            {% csrf_token %}
-            {% include "spirit/_form.html" %}
+  <h1 class="headline">{% trans "Login" %}</h1>
 
-            <input class="button btn btn-default" type="submit" name="post" value="{% trans "Login" %}" />
-        </form>
+  <div class="login">
+      <form action="." method="post">
+          {% csrf_token %}
+          {% include "spirit/_form.html" %}
+
+          <input class="button btn btn-primary" type="submit" name="post" value="{% trans "Login" %}" />
+      </form>
+  </div>
+
+  <div class="login-links">
+
+    <div class="row">
+      <div class="col-xs-12">
+        <a class="login-link" href="{% url "spirit:user:auth:register" %}">{% trans "Create an account" %}</a>
+      </div>
     </div>
 
-    <div class="login-links">
-		<a class="login-link" href="{% url "spirit:user:auth:register" %}">{% trans "Create an account" %}</a>
-		<a class="login-link" href="{% url "spirit:user:auth:password-reset" %}">{% trans "I don't know my password" %}</a>
-    <a class="login-link" href="{% url "spirit:user:auth:resend-activation" %}">{% trans "Resend activation email" %}</a>
-	</div>
+    <div class="row">
+      <div class="col-xs-12">
+        <a class="login-link" href="{% url "spirit:user:auth:password-reset" %}">{% trans "I don't know my password" %}</a>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <a class="login-link" href="{% url "spirit:user:auth:resend-activation" %}">{% trans "Resend activation email" %}</a>
+      </div>
+    </div>
+
+  </div>
+
+</div>
 
 {% endblock %}

@@ -4,19 +4,35 @@
 
 {% block title %}{% trans "Edit comment" %}{% endblock %}
 
+{% block head-extra %}
+  <script>
+   $(document).ready(function() {
+     $("textarea").addClass("form-control");
+   });
+  </script>
+{% endblock %}
+
 {% block content %}
 
-    <h1 class="headline">{% trans "Edit comment" %}</h1>
+<div class="container-fluid">
 
-    <form action="." method="post" class="js-reply">
-        {% csrf_token %}
-        {% include "spirit/_form.html" %}
+  <h1 class="headline">{% trans "Edit comment" %}</h1>
 
-        <div class="container">
-            {% include "spirit/comment/_editor.html" %}
+  <form action="." method="post" class="js-reply">
+      {% csrf_token %}
+      {% include "spirit/_form.html" %}
 
-            <input class="btn btn-default button reply-button" type="submit" value="{% trans "Publish" %}" />
+      <div class="row">
+        <div class="col-xs-12">
+          
+          {% include "spirit/comment/_editor.html" %}
+
+          <input class="btn btn-primary button reply-button" type="submit" value="{% trans "Publish" %}" />
+
         </div>
-    </form>
+      </div>
+  </form>
+
+</div>
 
 {% endblock %}

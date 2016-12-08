@@ -4,17 +4,29 @@
 
 {% block title %}{% trans "Resend activation email" %}{% endblock %}
 
+{% block head-extra %}
+  <script>
+   $(document).ready(function() {
+     $("input").addClass("form-control");
+   });
+  </script>
+{% endblock %}
+
 {% block content %}
 
-    <h1 class="headline">{% trans "Resend activation email" %}</h1>
+<div class="container-fluid">
 
-    <div class="login">
-        <form action="." method="post">
-            {% csrf_token %}
-            {% include "spirit/_form.html" %}
+  <h1 class="headline">{% trans "Resend activation email" %}</h1>
 
-            <input class="button" type="submit" name="post" value="{% trans "Resend email" %}" />
-        </form>
-    </div>
+  <div class="login">
+      <form action="." method="post">
+          {% csrf_token %}
+          {% include "spirit/_form.html" %}
+
+          <input class="btn btn-primary button" type="submit" name="post" value="{% trans "Resend email" %}" />
+      </form>
+  </div>
+  
+</div>
 
 {% endblock %}
