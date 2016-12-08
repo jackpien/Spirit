@@ -1,15 +1,29 @@
 {% load spirit_tags i18n %}
 
-{% include "spirit/user/admin/_tabs.html" with active_tab=active_tab %}
-
-<div class="rows">
-
-    {% for u in users %}
-        <div class="row">
-            <a href="{{ u.get_absolute_url }}">{{ u.username }}</a> <a class="row-edit" href="{% url "spirit:admin:user:edit" user_id=u.pk %}"><i class="fa fa-cog"></i> {% trans "edit" %}</a>
-        </div>
-    {% endfor %}
-
+<div class="row">
+  <div class="col-xs-12">
+    {% include "spirit/user/admin/_tabs.html" with active_tab=active_tab %}
+  </div>
+  <div class="col-xs-12" style="height: 10px;">&nbsp;</div>
 </div>
+
+
+<ul class="list-group">
+  {% for u in users %}
+  <li class="list-group-item">
+    <div class="row">
+      <div class="col-xs-10">
+        <a href="{{ u.get_absolute_url }}">{{ u.username }}</a>
+      </div>
+      <div class="col-xs-2" style="text-align:right;">
+        <a class="row-edit" href="{% url "spirit:admin:user:edit" user_id=u.pk %}">
+          <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> {% trans "edit" %}
+        </a>
+      </div>
+    </div>
+  </li>
+  {% endfor %}
+</ul>
+
 
 {% render_paginator users %}
