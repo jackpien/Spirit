@@ -6,85 +6,114 @@
 
 {% block content %}
 <div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-12">
+      <ol class="breadcrumb">
+          <li><a href="{% url "spirit:admin:index" %}" >{% trans "Admin" %}</a></li>
+          <li><a href="{% url "spirit:admin:flag:index" %}" >{% trans "Flags" %}</a></li>
+      </ol>
+    </div>
+  </div>
 
-    <ul class="nav">
-        <li><a href="{% url "spirit:admin:index" %}" >{% trans "Admin" %}</a><i class="fa fa-chevron-right"></i></li><!--
-     --><li><a href="{% url "spirit:admin:flag:index" %}" >{% trans "Flags" %}</a></li>
-    </ul>
+  <div class="row">
+    <div class="col-xs-12">
+      <h1 class="headline">{% trans "Flag" %}</h1>
+    </div>
+    <div class="col-xs-12" style="height: 10px;">&nbsp;</div>
+  </div>
 
-    <h1 class="headline">{% trans "Flag" %}</h1>
+  <div class="row">
+    <div class="col-xs-12">
+      {% if flag.moderator %}
+          <dl class="preference">
+             <dt class="preference-label">{% trans "Moderated by" %}:</dt>
+             <dd class="preference-desc"><a href="{{ flag.moderator.get_absolute_url }}">{{ flag.moderator.username }}</a></dd>
+          </dl>
+      {% endif %}
+    </div>
+  </div>
 
-    {% if flag.moderator %}
-        <dl class="preference">
-           <dt class="preference-label">{% trans "Moderated by" %}:</dt>
-           <dd class="preference-desc"><a href="{{ flag.moderator.get_absolute_url }}">{{ flag.moderator.username }}</a></dd>
-        </dl>
-    {% endif %}
+  <div class="row">
+    <div class="col-xs-12">
+      <form action="." method="post">
+          {% csrf_token %}
+          {% include "spirit/_form.html" %}
 
-    <form action="." method="post">
-        {% csrf_token %}
-        {% include "spirit/_form.html" %}
+          <input class="btn btn-default button" type="submit" name="post" value="{% trans "Save" %}" />
+      </form>
+    </div>
+  </div>
 
-        <input class="button" type="submit" name="post" value="{% trans "Save" %}" />
-    </form>
+
+
+
 
     <h2 class="headline">{% trans "Comment flagged" %}</h2>
+    <hr>
 
 		<div class="comments">
 
 			<div class="comment">
-                <ul class="comment-info">
-                    <li title="{{ flag.comment.date }}">{{ flag.comment.date|shortnaturaltime }}</li>
-                </ul>
+                <div class="comment-info row">
+                  <div class="col-xs-2 col-sm-1" style="text-align:center;">
+                    <p title="{{ flag.comment.date }}">{{ flag.comment.date|shortnaturaltime }}</p>
+                  </div>
+                </div>
 
-                <div class="comment-media">
-                    <div class="comment-img">
-                        <img class="comment-avatar" src="{% get_gravatar_url user=flag.comment.user size=50 %}" />
+                <div class="comment-media row">
+                    <div class="comment-img col-xs-2 col-sm-1" style="text-align:center;">
+                        <img class="comment-avatar img-circle" src="{% get_gravatar_url user=flag.comment.user size=50 %}" />
 
                         <div class="comment-username">
                             <a href="{{ flag.comment.user.st.get_absolute_url }}">{{ flag.comment.user.username }}</a>
                         </div>
                     </div>
 
-                    <div class="comment-body">
+                    <div class="comment-body col-xs-10 col-sm-11">
                         {{ flag.comment.comment_html|safe }}
                     </div>
                 </div>
 
-				<ul class="comment-actions">
-					<li><a href="#">{% trans "delete" %}</a></li>
-				</ul>
-            </div>
+				<div class="comment-actions" style="text-align:right;">
+					<a href="#">{% trans "delete" %}</a>
+				</div>
+      </div>
 
 		</div>
+    <hr>
 
 
     <h2 class="headline">{% trans "Reporters" %}</h2>
+    <hr>
 
     {% for f in flags %}
 		<div class="comments">
 
 			<div class="comment">
-                <ul class="comment-info">
-                    <li title="{{ f.date }}">{{ f.date|shortnaturaltime }}</li>
-                </ul>
+                <div class="comment-info row">
+                  <div class="col-xs-2 col-sm-1" style="text-align:center;">
+                    <p title="{{ f.date }}">{{ f.date|shortnaturaltime }}</p>
+                  </div>
+                </div>
 
-                <div class="comment-media">
-                    <div class="comment-img">
-                        <img class="comment-avatar" src="{% get_gravatar_url user=f.user size=50 %}" />
+                <div class="comment-media row">
+                    <div class="comment-img col-xs-2 col-sm-1"  style="text-align:center;">
+                        <img class="comment-avatar img-circle" src="{% get_gravatar_url user=f.user size=50 %}" />
 
                         <div class="comment-username">
                             <a href="{{ f.user.st.get_absolute_url }}">{{ f.user.username }}</a>
                         </div>
                     </div>
 
-                    <div class="comment-body">
+                    <div class="comment-body col-xs-10 col-sm-11">
                         {{ f.body }}
                     </div>
                 </div>
             </div>
 
 		</div>
+    <hr>
+
     {% endfor %}
 
     {% render_paginator flags %}

@@ -4,15 +4,27 @@
 
 {% block title %}{% trans "Update Category" %}{% endblock %}
 
+{% block head-extra %}
+  <script>
+   $(document).ready(function() {
+     $("input, select").addClass("form-control");
+   });
+  </script>
+{% endblock %}
+
 {% block content %}
 
-    <h1 class="headline">{% trans "Update Category" %}</h1>
+<div class="container-fluid">
 
-    <form action="." method="post">
-        {% csrf_token %}
-        {% include "spirit/_form.html" %}
+  <h1 class="headline">{% trans "Update Category" %}</h1>
 
-        <input class="button" type="submit" name="post" value="{% trans "Save" %}" />
-    </form>
+  <form action="." method="post">
+      {% csrf_token %}
+      {% include "spirit/_form.html" %}
+
+      <input class="button" type="submit" name="post" value="{% trans "Save" %}" />
+  </form>
+
+</div>
 
 {% endblock %}

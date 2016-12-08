@@ -4,6 +4,14 @@
 
 {% block title %}{% trans "Basic Settings" %}{% endblock %}
 
+{% block head-extra %}
+  <script>
+   $(document).ready(function() {
+     $("input, select, textarea").addClass("form-control");
+   });
+  </script>
+{% endblock %}
+
 {% block content %}
   <div class="container-fluid">
     {% include "spirit/admin/_side_menu.html" with active="basic_settings" %}

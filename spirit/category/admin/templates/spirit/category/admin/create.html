@@ -4,7 +4,16 @@
 
 {% block title %}{% trans "Add Category" %}{% endblock %}
 
+{% block head-extra %}
+  <script>
+   $(document).ready(function() {
+     $("input, select").addClass("form-control");
+   });
+  </script>
+{% endblock %}
+
 {% block content %}
+<div class="container-fluid">
 
     <h1 class="headline">{% trans "Add Category" %}</h1>
 
@@ -14,5 +23,7 @@
 
         <input class="button" type="submit" name="post" value="{% trans "Save" %}" />
     </form>
+
+</div>
 
 {% endblock %}
