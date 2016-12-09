@@ -4,28 +4,40 @@
 
 {% block title %}{% trans "Preferences" %}{% endblock %}
 
+{% block head-extra %}
+  <script>
+   $(document).ready(function() {
+     $("input, select").addClass("form-control");
+   });
+  </script>
+{% endblock %}
+
 {% block content %}
 
-    <h1 class="headline">{% trans "Preferences" %}</h1>
+<div class="container-fluid">
 
-    <dl class="preference">
-	   <dt class="preference-label">{% trans "Email" %}:</dt>
-	   <dd class="preference-desc"><a href="{% url "spirit:user:email-change" %}"><i class="fa fa-pencil"></i> {{ user.email }}</a></dd>
+  <h1 class="headline">{% trans "Preferences" %}</h1>
 
-	   <dt class="preference-label">{% trans "Password" %}:</dt>
-	   <dd class="preference-desc"><a href="{% url "spirit:user:password-change" %}"><i class="fa fa-pencil"></i> {% trans "Change password" %}</a></dd>
+  <dl class="preference">
+   <dt class="preference-label">{% trans "Email" %}:</dt>
+   <dd class="preference-desc"><a href="{% url "spirit:user:email-change" %}"><i class="fa fa-pencil"></i> {{ user.email }}</a></dd>
 
-	   <dt class="preference-label">{% trans "Avatar" %}:</dt>
-	   <dd class="preference-desc"><a href="https://gravatar.com"><i class="fa fa-pencil"></i> {% trans "Change avatar" %}</a>
-           ({% trans "Go to gravatar.com and use your current email to change it" %})</dd>
-	</dl>
+   <dt class="preference-label">{% trans "Password" %}:</dt>
+   <dd class="preference-desc"><a href="{% url "spirit:user:password-change" %}"><i class="fa fa-pencil"></i> {% trans "Change password" %}</a></dd>
 
-    <form action="." method="post">
-        {% csrf_token %}
-        {% include "spirit/_form.html" with form=uform %}
-        {% include "spirit/_form.html" %}
+   <dt class="preference-label">{% trans "Avatar" %}:</dt>
+   <dd class="preference-desc"><a href="https://gravatar.com"><i class="fa fa-pencil"></i> {% trans "Change avatar" %}</a>
+         ({% trans "Go to gravatar.com and use your current email to change it" %})</dd>
+</dl>
 
-        <input class="button" type="submit" name="post" value="{% trans "Save" %}" />
-    </form>
+  <form action="." method="post">
+      {% csrf_token %}
+      {% include "spirit/_form.html" with form=uform %}
+      {% include "spirit/_form.html" %}
+
+      <input class="btn btn-primary button" type="submit" name="post" value="{% trans "Save" %}" />
+  </form>
+
+</div>
 
 {% endblock %}

@@ -4,24 +4,46 @@
 
 {% block title %}{% trans "Publish a private topic" %}{% endblock %}
 
+{% block head-extra %}
+  <script>
+   $(document).ready(function() {
+     $("input, select, textarea").addClass("form-control");
+   });
+  </script>
+{% endblock %}
+
 {% block content %}
 
-    <h1 class="headline">{% trans "Publish private topic" %}</h1>
+<div class="container-fluid">
 
-    <form action="." method="post" class="js-reply">
-        {% csrf_token %}
-        {% include "spirit/_form.html" with form=tform %}
-        {% include "spirit/_form.html" with form=tpform %}
+  <h1 class="headline">{% trans "Publish private topic" %}</h1>
 
-        <div class="topic-publish-comment">
-            {% include "spirit/_form.html" with form=cform %}
-        </div>
+  <form action="." method="post" class="js-reply">
+    {% csrf_token %}
+    {% include "spirit/_form.html" with form=tform %}
+    {% include "spirit/_form.html" with form=tpform %}
 
-        <div class="container">
-            {% include "spirit/comment/_editor.html" %}
+    <div class="topic-publish-comment">
+      {% include "spirit/_form.html" with form=cform %}
+    </div>
 
-            <input class="button reply-button" type="submit" value="{% trans "Publish" %}" />
-        </div>
-    </form>
+    <div class="row">
+      <div class="col-xs-12 col-sm-6 text-left">
+        {% include "spirit/comment/_editor.html" %}
+      </div>
+
+      {# margin that only appears in xs #}
+      <div class="col-xs-12 visible-xs-block" style="height:10px;">
+        &nbsp;
+      </div>
+
+      <div class="col-xs-12 col-sm-6 text-right">
+        <input class="btn btn-primary button reply-button"
+           type="submit" value="{% trans "Publish" %}" />
+      </div>
+    </div>
+  </form>
+
+</div>
 
 {% endblock %}
