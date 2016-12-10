@@ -15,23 +15,35 @@
 {% block content %}
 
 <div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-12
+         col-sm-10 col-sm-offset-1
+         col-md-8 col-md-offset-2">
 
-  <h1 class="headline">{% trans "Edit comment" %}</h1>
+        <h1 class="headline">{% trans "Edit comment" %}</h1>
 
-  <form action="." method="post" class="js-reply">
-      {% csrf_token %}
-      {% include "spirit/_form.html" %}
+        <form action="." method="post" class="js-reply">
+          {% csrf_token %}
+          {% include "spirit/_form.html" %}
 
-      <div class="row">
-        <div class="col-xs-12">
-          
-          {% include "spirit/comment/_editor.html" %}
+          <div class="row">
+            <div class="ol-xs-12 col-sm-6 text-left">
+              {% include "spirit/comment/_editor.html" %}
+            </div>
 
-          <input class="btn btn-primary button reply-button" type="submit" value="{% trans "Publish" %}" />
+            {# margin that only appears in xs #}
+            <div class="col-xs-12 visible-xs-block" style="height:10px;">
+              &nbsp;
+            </div>
 
-        </div>
+            <div class="col-xs-12 col-sm-6 text-right">
+              <input class="btn btn-primary button reply-button" type="submit"
+                 value="{% trans "Publish" %}" style="width: 100%;"/>
+            </div>
+          </div>
+        </form>
       </div>
-  </form>
+    </div>
 
 </div>
 

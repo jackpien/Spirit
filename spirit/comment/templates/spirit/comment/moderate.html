@@ -15,15 +15,21 @@
 {% block content %}
 
 <div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-12
+         col-sm-10 col-sm-offset-1
+         col-md-8 col-md-offset-2">
 
-  <h1 class="headline">{% trans "Moderate comment" %}</h1>
+         <h1 class="headline">{% trans "Moderate comment" %}</h1>
 
-  <form action="." method="post">
-    {% csrf_token %}
+         <form action="." method="post">
+           {% csrf_token %}
 
-    <input class="btn btn-primary button" type="submit" name="post" value="{% trans "Apply" %}" />
-  </form>
+           <input class="btn btn-primary button" type="submit" name="post" value="{% trans "Apply" %}" />
+         </form>
 
+    </div>
+  </div>
 </div>
 
 {% endblock %}

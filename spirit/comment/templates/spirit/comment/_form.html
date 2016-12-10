@@ -17,10 +17,22 @@
 
   <div class="row">
     <div class="col-xs-12" style="height: 10px;">&nbsp;</div>
-    <div class="col-xs-12 col-sm-12">
-        {% include "spirit/comment/_editor.html" %}
+      <div class="col-xs-12">
+        <div class="row">
+          <div class="col-xs-12 col-sm-6 text-left">
+            {% include "spirit/comment/_editor.html" %}
+          </div>
 
-        <input class="btn btn-primary button reply-button" type="submit" value="{% trans "Publish" %}" />
+          {# margin that only appears in xs #}
+          <div class="col-xs-12 visible-xs-block" style="height:10px;">
+            &nbsp;
+          </div>
+
+          <div class="col-xs-12 col-sm-6 text-right">
+            <input class="btn btn-primary button reply-button" type="submit"
+               value="{% trans "Publish" %}" style="width:100%;"/>
+          </div>
+        </div>
     </div>
   </div>
 </form>

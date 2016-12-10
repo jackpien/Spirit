@@ -15,16 +15,27 @@
 {% block content %}
 
 <div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-12
+         col-sm-10 col-sm-offset-1
+         col-md-8 col-md-offset-2">
 
-  <h1 class="headline">{% trans "Email change" %}</h1>
+        <h1 class="headline">{% trans "Email change" %}</h1>
 
-  <form action="." method="post">
-      {% csrf_token %}
-      {% include "spirit/_form.html" %}
+        <form action="." method="post">
+            {% csrf_token %}
+            {% include "spirit/_form.html" %}
 
-      <input class="btn btn-primary button" type="submit" name="post" value="{% trans 'Change my email' %}" />
-  </form>
+            <div class="row">
+              <div class="col-xs-12 col-sm-6 col-sm-offset-6">
+                <input class="btn btn-primary button" type="submit" name="post"
+                   value="{% trans 'Change my email' %}" />
+              </div>
+            </div>
+        </form>
 
+    </div>
+  </div>
 </div>
 
 {% endblock %}
