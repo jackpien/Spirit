@@ -18,11 +18,13 @@
         <ul class="nav navbar-nav navbar-right">
           {% if user.is_authenticated %}
             {% has_topic_notifications user as has_notifications %}
+              {% comment %}
               <li><a class="header-tab-link js-tab" onClick="alert('need to implement')"
                      data-related=".js-search-content"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></li>
+              {% endcomment %}
               <li><a class="header-tab-link js-tab-notification{% if has_notifications %} is-highlighted{% endif %}"
                      href="{% url "spirit:topic:notification:index" %}" data-related=".js-notifications-content"
-                     onClick="alert('need to implement')">
+                     style="{% if has_notifications %}color:red;{% endif %}">
                      <span class="glyphicon glyphicon-bell" aria-hidden="true"></span></a></li>
               <li class="dropdown">
                 <a class="dropdown-toggle header-tab-link js-tab"
@@ -34,8 +36,10 @@
                 <ul class="dropdown-menu">
                   <li><a class="menu-link" href="{% url "spirit:user:detail" pk=user.pk slug=user.st.slug %}">{% trans "Profile" %}</a></li>
                   <li><a class="menu-link" href="{% url "spirit:topic:index-active" %}">{% trans "Topics" %}</a></li>
-                  <li><a class="menu-link" href="{% url "spirit:topic:unread:index" %}">{% trans "Unread topics" %}</a></li> <!--
-                  <li><a class="menu-link" href="{% url "spirit:topic:private:index" %}">{% trans "Private topics" %}</a></li> -->
+                  <li><a class="menu-link" href="{% url "spirit:topic:unread:index" %}">{% trans "Unread topics" %}</a></li>
+                  {% comment %}
+                  <li><a class="menu-link" href="{% url "spirit:topic:private:index" %}">{% trans "Private topics" %}</a></li>
+                  {% endcomment %}
                   {% if user.st.is_administrator %}
                   <li><a class="menu-link" href="{% url "spirit:admin:index" %}">{% trans "Admin" %}</a></li>
                   {% endif %}
