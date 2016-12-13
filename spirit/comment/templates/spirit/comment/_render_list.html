@@ -43,7 +43,6 @@
                 {% if not c.action %}
                 <div class="row">
                   <div class="col-sm-12">
-                    <div class="btn-toolbar" role="toolbar" style="float:right;">
                       <div class="comment-actions btn-group" role="group" style="float:right;">
                           {% if user.is_authenticated %}
                               {% if user.st.is_moderator %}
@@ -57,12 +56,11 @@
                               <a class="btn btn-default" role="button" href="{% url "spirit:comment:flag:create" c.pk %}"><span class="glyphicon glyphicon-flag" aria-hidden="true"></span>{% trans "report" %}</a>
                           {% endif %}
 
+                          {# ake TTD - commented out share button because popup doesn't work #}
+                          {% comment %}
                           <a class="btn btn-default" role="button" class="js-share" href="#" data-dialog=".js-share-{{ c.pk }}"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> {% trans "share" %}</a>
-                      </div>
+                          {% endcomment %}
 
-                      <div class="col-xs-12 visible-xs-block" style="height: 10px;">&nbsp;</div>
-
-                      <div class="btn-group" role="group" style="float:right;">
                         {% if user.is_authenticated %}
                             {% if c.like %}
                                 <a class="btn btn-default js-like" role="button" href="{% url "spirit:comment:like:delete" c.like.pk %}" data-count="{{ c.likes_count }}" ><span class="glyphicon glyphicon-heart" aria-hidden="true"></span> {% trans "remove like" %} ({{ c.likes_count }})</a>
@@ -79,11 +77,15 @@
                             {% endif %}
 
                             {% ifnotequal c.user.pk user.pk %}
+                                {# ake TTD - commented out quote button since it doesn't work #}
+                                {% comment %}
                                 <a class="btn btn-default" role="button" href="{% url "spirit:comment:publish" topic_id=topic.pk pk=c.pk %}" >{% trans "quote" %}</a>
+                                {% endcomment %}
+
+                                {# ake TTD - doesn't lead to the reply box, but doesn't do anything harmful either #}
                                 <a class="btn btn-default" role="button" href="#reply" >{% trans "reply" %}</a>
                             {% endifnotequal %}
                         {% endif %}
-                      </div>
                       </div>
 
                   </div>

@@ -18,6 +18,7 @@
         <ul class="nav navbar-nav navbar-right">
           {% if user.is_authenticated %}
             {% has_topic_notifications user as has_notifications %}
+              {# ake TTD - commented out search button #}
               {% comment %}
               <li><a class="header-tab-link js-tab" onClick="alert('need to implement')"
                      data-related=".js-search-content"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></li>
@@ -37,6 +38,7 @@
                   <li><a class="menu-link" href="{% url "spirit:user:detail" pk=user.pk slug=user.st.slug %}">{% trans "Profile" %}</a></li>
                   <li><a class="menu-link" href="{% url "spirit:topic:index-active" %}">{% trans "Topics" %}</a></li>
                   <li><a class="menu-link" href="{% url "spirit:topic:unread:index" %}">{% trans "Unread topics" %}</a></li>
+                  {# ake TTD - commented out link to private topics #}
                   {% comment %}
                   <li><a class="menu-link" href="{% url "spirit:topic:private:index" %}">{% trans "Private topics" %}</a></li>
                   {% endcomment %}
